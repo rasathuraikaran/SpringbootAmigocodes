@@ -2,9 +2,7 @@ package com.karax;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,19 +29,27 @@ public class Main {
 
     }
 
-    @GetMapping("/greet")
-    public GreetResponse greet() {
-       GreetResponse response= new GreetResponse("Hello",List.of("Java","Golang","Python"),new Person("Karan SR"));
-       return  response;
-    }
 
-    record Person(String name) {
-    }
-
-    record GreetResponse(String greet, List<String> favprogramminLanguages, Person person) {
-
+    record NewCustomerRequest(String name,String email,Integer age){
 
     }
+    @PostMapping
+    public void addCustomer(@RequestBody NewCustomerRequest request){
+        Customer customer =new Customer();
+        customer.setName(request.name());
+        customer.setAge(request.age());
+        customer.setEmail(request.email());
+
+        customerrepo.save(customer);
+
+
+
+    }
+
+
+
+
+
  /*  public class GreetResponse{
         private String greet;
 
